@@ -7,10 +7,14 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CompilerWarnings)
 
-add_library(darthex_domain INTERFACE)
-target_include_directories(darthex_domain INTERFACE
+add_library(darthex_domain STATIC
+  src/domain/keyword.cpp
+)
+target_include_directories(darthex_domain PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
-target_compile_features(darthex_domain INTERFACE cxx_std_17)
+target_compile_features(darthex_domain PUBLIC cxx_std_17)
+darthex_enable_warnings(darthex_domain)
+set_target_properties(darthex_domain PROPERTIES CXX_EXTENSIONS OFF)
 
 add_executable(darthexc src/main.cpp)
 target_link_libraries(darthexc PRIVATE darthex_domain)
