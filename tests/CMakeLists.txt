@@ -13,7 +13,8 @@ add_executable(darthex_tests
   unit/domain/lexical_error_test.cpp
   unit/domain/identifier_test.cpp
   unit/domain/keyword_test.cpp
+  unit/adapters/lexer_test.cpp
 )
-target_link_libraries(darthex_tests PRIVATE Catch2::Catch2WithMain darthex_domain)
+target_link_libraries(darthex_tests PRIVATE Catch2::Catch2WithMain darthex_adapters)
 set_target_properties(darthex_tests PROPERTIES CXX_EXTENSIONS OFF)
 darthex_enable_warnings(darthex_tests)
