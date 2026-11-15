@@ -38,9 +38,28 @@ cmake --build build
 ./build/darthexc <source-file.dx>
 ```
 
-## Running Tests
+## Tests
 
 ```bash
-cmake --build build
-ctest --test-dir build --output-on-failure
+cmake --build build && ctest --test-dir build --output-on-failure
 ```
+
+### Unit tests (`tests/unit/`)
+
+| Suite | Layer |
+|-------|-------|
+| `source_location`, `token`, `token_kind`, `lexical_error`, `identifier`, `keyword`, `char_class` | `domain` |
+| `lexer`, `symbol_table` | `adapters` |
+| `lex_service` | `application/services` |
+
+### Acceptance tests (`tests/acceptance/`)
+
+Fixtures in `tests/fixtures/lexer/` reproduce the five programs from the assignment spec.
+
+| Fixture | Lexical error(s) |
+|---------|------------------|
+| `test1.dex` | Unterminated comment — `{*…}` missing `*}`, swallows file from line 2 |
+| `test2.dex` | Identifier starts with digit — `1c` on line 2 |
+| `test3.dex` | Unterminated string — `"Par…` not closed before end of line 15 |
+| `test4.dex` | Unterminated comment — never closed, swallows file from line 2 |
+| `test5.dex` | Unterminated string `");` on line 22; unterminated char const `'n)` on line 26 |
