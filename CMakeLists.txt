@@ -18,6 +18,7 @@ set_target_properties(darthex_domain PROPERTIES CXX_EXTENSIONS OFF)
 
 add_library(darthex_adapters STATIC
   src/adapters/Lexer.cpp
+  src/adapters/SymbolTable.cpp
 )
 target_include_directories(darthex_adapters PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
