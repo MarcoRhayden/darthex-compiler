@@ -29,6 +29,7 @@ set_target_properties(darthex_application PROPERTIES CXX_EXTENSIONS OFF)
 add_library(darthex_adapters STATIC
   src/adapters/Lexer.cpp
   src/adapters/SymbolTable.cpp
+  src/adapters/ConsoleReporter.cpp
 )
 target_include_directories(darthex_adapters PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
@@ -38,7 +39,7 @@ darthex_enable_warnings(darthex_adapters)
 set_target_properties(darthex_adapters PROPERTIES CXX_EXTENSIONS OFF)
 
 add_executable(darthexc src/main.cpp)
-target_link_libraries(darthexc PRIVATE darthex_adapters)
+target_link_libraries(darthexc PRIVATE darthex_adapters darthex_application)
 darthex_enable_warnings(darthexc)
 set_target_properties(darthexc PROPERTIES CXX_EXTENSIONS OFF)
 
