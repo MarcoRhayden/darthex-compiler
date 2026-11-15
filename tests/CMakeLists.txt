@@ -17,6 +17,10 @@ add_executable(darthex_tests
   unit/adapters/lexer_test.cpp
   unit/adapters/symbol_table_test.cpp
   unit/application/services/lex_service_test.cpp
+  acceptance/stage_one_test.cpp
+)
+target_compile_definitions(darthex_tests PRIVATE
+  FIXTURE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/fixtures"
 )
 target_link_libraries(darthex_tests PRIVATE Catch2::Catch2WithMain darthex_adapters darthex_application)
 set_target_properties(darthex_tests PROPERTIES CXX_EXTENSIONS OFF)
