@@ -16,7 +16,8 @@ add_executable(darthex_tests
   unit/domain/char_class_test.cpp
   unit/adapters/lexer_test.cpp
   unit/adapters/symbol_table_test.cpp
+  unit/application/services/lex_service_test.cpp
 )
-target_link_libraries(darthex_tests PRIVATE Catch2::Catch2WithMain darthex_adapters)
+target_link_libraries(darthex_tests PRIVATE Catch2::Catch2WithMain darthex_adapters darthex_application)
 set_target_properties(darthex_tests PROPERTIES CXX_EXTENSIONS OFF)
 darthex_enable_warnings(darthex_tests)

@@ -16,6 +16,16 @@ target_compile_features(darthex_domain PUBLIC cxx_std_17)
 darthex_enable_warnings(darthex_domain)
 set_target_properties(darthex_domain PROPERTIES CXX_EXTENSIONS OFF)
 
+add_library(darthex_application STATIC
+  src/application/services/LexService.cpp
+)
+target_include_directories(darthex_application PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
+target_link_libraries(darthex_application PUBLIC darthex_domain)
+target_compile_features(darthex_application PUBLIC cxx_std_17)
+darthex_enable_warnings(darthex_application)
+set_target_properties(darthex_application PROPERTIES CXX_EXTENSIONS OFF)
+
 add_library(darthex_adapters STATIC
   src/adapters/Lexer.cpp
   src/adapters/SymbolTable.cpp
