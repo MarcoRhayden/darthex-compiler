@@ -60,7 +60,7 @@ TEST_CASE("fixture test1: unterminated comment swallows file from line 2") {
 
 // ---------------------------------------------------------------------------
 // Test 2: identifier starting with a digit
-// 1c:int — the token 1c is an identifier_starts_with_digit error
+// 1c:int -- the token 1c triggers identifier_starts_with_digit
 // ---------------------------------------------------------------------------
 TEST_CASE("fixture test2: identifier starting with digit on line 2") {
   const auto r = run_fixture(FIXTURE_DIR "/lexer/test2.dex");
@@ -90,7 +90,7 @@ TEST_CASE("fixture test2: identifier starting with digit on line 2") {
 
 // ---------------------------------------------------------------------------
 // Test 3: unterminated string literal
-// write ("Par);  — the string never closes on the same line
+// write ("Par);  -- the string never closes on the same line
 // ---------------------------------------------------------------------------
 TEST_CASE("fixture test3: unterminated string literal on line 15") {
   const auto r = run_fixture(FIXTURE_DIR "/lexer/test3.dex");
@@ -114,7 +114,7 @@ TEST_CASE("fixture test3: unterminated string literal on line 15") {
 
 // ---------------------------------------------------------------------------
 // Test 4: unterminated block comment (comment never closed)
-// {* Teste4 do meu compilador  — no *} anywhere in the file
+// {* Teste4 do meu compilador  -- no *} anywhere in the file
 // ---------------------------------------------------------------------------
 TEST_CASE("fixture test4: unterminated comment swallows file from line 2") {
   const auto r = run_fixture(FIXTURE_DIR "/lexer/test4.dex");
@@ -156,7 +156,7 @@ TEST_CASE("fixture test5: unterminated string line 22 and unterminated char cons
 
   CHECK(r.has_errors);
 
-  // opening comment {* … *} is properly closed → first token is kw_program
+  // opening comment {* ... *} is properly closed -- first token is kw_program
   CHECK(r.tokens[0].kind == TokenKind::kw_program);
   CHECK(r.tokens[1].kind == TokenKind::identifier);
   CHECK(r.tokens[1].lexeme == "teste5");
