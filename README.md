@@ -1,5 +1,7 @@
 # DarthEx Compiler
 
+> **Official repository:** [github.com/MarcoRhayden/darthex-compiler](https://github.com/MarcoRhayden/darthex-compiler)
+
 > A handwritten compiler built in C++17.
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
@@ -17,7 +19,7 @@ DarthEx is a handwritten compiler built in C++17 following Clean Architecture pr
 
 | Layer         | Responsibility                                                         |
 | ------------- | ---------------------------------------------------------------------- |
-| `domain`      | Pure value types: tokens, locations, errors, AST nodes. No I/O.        |
+| `domain`      | Pure value types and language rules. No I/O.                           |
 | `application` | Use cases that drive the compilation pipeline.                         |
 | `adapters`    | CLI and console output. The only layer that touches the outside world. |
 
