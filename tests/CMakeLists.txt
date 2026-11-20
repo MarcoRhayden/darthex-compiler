@@ -11,11 +11,13 @@ add_executable(darthex_tests
   unit/domain/token_kind_test.cpp
   unit/domain/token_test.cpp
   unit/domain/lexical_error_test.cpp
+  unit/domain/syntax_error_test.cpp
   unit/domain/identifier_test.cpp
   unit/domain/keyword_test.cpp
   unit/domain/char_class_test.cpp
   unit/adapters/lexer_test.cpp
   unit/adapters/symbol_table_test.cpp
+  unit/application/ports/parser_port_test.cpp
   unit/application/services/lex_service_test.cpp
   acceptance/stage_one_test.cpp
 )
