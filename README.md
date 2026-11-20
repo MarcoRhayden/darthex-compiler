@@ -64,6 +64,7 @@ Test programs are stored in:
 
 - `tests/fixtures/lexer`: programs with lexical errors;
 - `tests/fixtures/parser/invalid`: programs with one syntax error;
+- `tests/fixtures/parser/report`: successive corrections documented in the report;
 - `tests/fixtures/parser/valid`: corrected programs and additional examples.
 
 Run the complete test suite with:

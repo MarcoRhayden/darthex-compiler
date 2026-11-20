@@ -62,23 +62,13 @@ Syntax analysis completed successfully.
 Foram usados cinco programas para testar o analisador sintático. Os erros
 léxicos desses arquivos já foram corrigidos.
 
-Cada programa tem uma versão com erro sintático e outra corrigida. Assim, é
-possível conferir a mensagem de erro e depois confirmar que o programa correto
-é aceito pelo compilador.
+Cada programa tem versões sucessivas, com uma correção por vez. Assim, é
+possível conferir cada mensagem até o programa ser aceito pelo compilador.
 
-| Programa | Erro usado no teste | Mensagem | Correção |
-| --- | --- | --- | --- |
-| [Teste 1](../tests/fixtures/parser/invalid/test1.dex) | `write "Area: "` sem parênteses | `5:7 syntax error: expected '(', found "\"Area: \""` | Usar `write("Area: ")`. [Versão corrigida](../tests/fixtures/parser/valid/test1.dex). |
-| [Teste 2](../tests/fixtures/parser/invalid/test2.dex) | Atribuição escrita como `val := 34` | `4:5 syntax error: expected '=', found ":"` | Usar `val = 34`. [Versão corrigida](../tests/fixtures/parser/valid/test2.dex). |
-| [Teste 3](../tests/fixtures/parser/invalid/test3.dex) | Falta o `end` do `if` | `9:4 syntax error: expected 'end', found "."` | Fechar o `if` antes do `end.` do programa. [Versão corrigida](../tests/fixtures/parser/valid/test3.dex). |
-| [Teste 4](../tests/fixtures/parser/invalid/test4.dex) | Parêntese aberto sem fechamento no `while` | `4:58 syntax error: expected ')', found "do"` | Fechar a condição antes de `do`. [Versão corrigida](../tests/fixtures/parser/valid/test4.dex). |
-| [Teste 5](../tests/fixtures/parser/invalid/test5.dex) | Falta `then` depois da condição | `5:1 syntax error: expected 'then', found "maior"` | Adicionar `then` antes do corpo. [Versão corrigida](../tests/fixtures/parser/valid/test5.dex). |
+A sequência completa mostra o código analisado, a mensagem recebida e o código
+usado depois de cada correção:
 
-Depois da correção, os cinco programas produzem:
-
-```text
-Syntax analysis completed successfully.
-```
+- [resultados dos cinco programas](syntax-test-results.md).
 
 ## Programas extras
 
