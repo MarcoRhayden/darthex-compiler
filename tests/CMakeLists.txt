@@ -25,3 +25,7 @@ target_compile_definitions(darthex_tests PRIVATE
 target_link_libraries(darthex_tests PRIVATE Catch2::Catch2WithMain darthex_adapters darthex_application)
 set_target_properties(darthex_tests PROPERTIES CXX_EXTENSIONS OFF)
 darthex_enable_warnings(darthex_tests)
+
+list(APPEND CMAKE_MODULE_PATH "${catch2_SOURCE_DIR}/extras")
+include(Catch)
+catch_discover_tests(darthex_tests)

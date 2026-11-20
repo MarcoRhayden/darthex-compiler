@@ -33,7 +33,7 @@ add_library(darthex_adapters STATIC
 )
 target_include_directories(darthex_adapters PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
-target_link_libraries(darthex_adapters PUBLIC darthex_domain)
+target_link_libraries(darthex_adapters PUBLIC darthex_application)
 target_compile_features(darthex_adapters PUBLIC cxx_std_17)
 darthex_enable_warnings(darthex_adapters)
 set_target_properties(darthex_adapters PROPERTIES CXX_EXTENSIONS OFF)
