@@ -94,6 +94,15 @@ bool Parser::parse_statement() {
   if (check(TokenKind::identifier)) {
     return parse_assignment();
   }
+  if (check(TokenKind::kw_if)) {
+    return parse_if();
+  }
+  if (check(TokenKind::kw_while)) {
+    return parse_while();
+  }
+  if (check(TokenKind::kw_repeat)) {
+    return parse_repeat();
+  }
   if (check(TokenKind::kw_read)) {
     return parse_read();
   }
@@ -106,6 +115,30 @@ bool Parser::parse_statement() {
 bool Parser::parse_assignment() {
   return expect(TokenKind::identifier, "identifier") &&
          expect(TokenKind::op_assign, "'='") && parse_simple_expression();
+}
+
+bool Parser::parse_if() {
+  if (!expect(TokenKind::kw_if, "'if'") || !parse_expression() ||
+      !expect(TokenKind::kw_then, "'then'") || !parse_statement_list()) {
+    return false;
+  }
+
+  if (match(TokenKind::kw_else) && !parse_statement_list()) {
+    return false;
+  }
+
+  return expect(TokenKind::kw_end, "'end'");
+}
+
+bool Parser::parse_while() {
+  return expect(TokenKind::kw_while, "'while'") && parse_expression() &&
+         expect(TokenKind::kw_do, "'do'") && parse_statement_list() &&
+         expect(TokenKind::kw_end, "'end'");
+}
+
+bool Parser::parse_repeat() {
+  return expect(TokenKind::kw_repeat, "'repeat'") && parse_statement_list() &&
+         expect(TokenKind::kw_until, "'until'") && parse_expression();
 }
 
 bool Parser::parse_read() {
@@ -216,8 +249,9 @@ bool Parser::match(TokenKind kind) {
 }
 
 bool Parser::is_statement_start() const {
-  return check(TokenKind::identifier) || check(TokenKind::kw_read) ||
-         check(TokenKind::kw_write);
+  return check(TokenKind::identifier) || check(TokenKind::kw_if) ||
+         check(TokenKind::kw_while) || check(TokenKind::kw_repeat) ||
+         check(TokenKind::kw_read) || check(TokenKind::kw_write);
 }
 
 bool Parser::is_relational_operator() const {

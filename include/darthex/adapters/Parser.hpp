@@ -24,6 +24,9 @@ class Parser : public application::ports::IParser {
   bool parse_statement_list();
   bool parse_statement();
   bool parse_assignment();
+  bool parse_if();
+  bool parse_while();
+  bool parse_repeat();
   bool parse_read();
   bool parse_write();
   bool parse_expression();

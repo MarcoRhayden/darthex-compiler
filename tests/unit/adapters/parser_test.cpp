@@ -79,6 +79,31 @@ TEST_CASE("parser accepts relational operators inside grouped expressions") {
                     "end."));
 }
 
+TEST_CASE("parser accepts control statements") {
+  Parser parser;
+
+  CHECK_FALSE(parse(parser,
+                    "program control begin "
+                    "if value >= 10 then write(\"limit\"); else read(value); end; "
+                    "while value > 0 do value = value - 1; end; "
+                    "repeat value = value + 1; until value == 10 "
+                    "end."));
+}
+
+TEST_CASE("parser accepts nested control statements") {
+  Parser parser;
+
+  CHECK_FALSE(parse(parser,
+                    "program nested begin "
+                    "if enabled then "
+                    "while value < 5 do "
+                    "repeat value = value + 1 until value == 3 "
+                    "end; "
+                    "write(value) "
+                    "end "
+                    "end."));
+}
+
 TEST_CASE("parser reports the first expected item") {
   Parser parser;
 
@@ -169,6 +194,42 @@ TEST_CASE("parser reports incomplete expressions") {
     REQUIRE(error);
     CHECK(error->unexpected.kind == TokenKind::kw_end);
     CHECK(error->expected == "expression value");
+  }
+}
+
+TEST_CASE("parser reports malformed control statements") {
+  Parser parser;
+
+  SECTION("if requires then") {
+    const auto error =
+        parse(parser, "program demo begin if ready write(ready) end end.");
+    REQUIRE(error);
+    CHECK(error->unexpected.kind == TokenKind::kw_write);
+    CHECK(error->expected == "'then'");
+  }
+
+  SECTION("if requires a statement after then") {
+    const auto error =
+        parse(parser, "program demo begin if ready then end end.");
+    REQUIRE(error);
+    CHECK(error->unexpected.kind == TokenKind::kw_end);
+    CHECK(error->expected == "statement");
+  }
+
+  SECTION("while requires do") {
+    const auto error =
+        parse(parser, "program demo begin while ready write(ready) end end.");
+    REQUIRE(error);
+    CHECK(error->unexpected.kind == TokenKind::kw_write);
+    CHECK(error->expected == "'do'");
+  }
+
+  SECTION("repeat requires until") {
+    const auto error =
+        parse(parser, "program demo begin repeat value = 1 end.");
+    REQUIRE(error);
+    CHECK(error->unexpected.kind == TokenKind::kw_end);
+    CHECK(error->expected == "'until'");
   }
 }
 
