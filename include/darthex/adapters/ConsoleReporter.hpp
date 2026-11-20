@@ -1,11 +1,10 @@
 #pragma once
 
 #include <ostream>
-#include <string>
 #include <vector>
 
 #include "darthex/domain/lexical_error.hpp"
-#include "darthex/domain/token.hpp"
+#include "darthex/domain/syntax_error.hpp"
 
 namespace darthex::adapters {
 
@@ -13,9 +12,9 @@ class ConsoleReporter {
  public:
   ConsoleReporter(std::ostream& out, std::ostream& err);
 
-  void print_tokens(const std::vector<domain::Token>& tokens);
-  void print_errors(const std::vector<domain::LexicalError>& errors);
-  void print_symbols(const std::vector<std::string>& symbols);
+  void print_lexical_errors(const std::vector<domain::LexicalError>& errors);
+  void print_syntax_error(const domain::SyntaxError& error);
+  void print_success();
 
  private:
   std::ostream& out_;

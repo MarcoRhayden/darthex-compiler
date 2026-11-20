@@ -10,20 +10,8 @@ namespace darthex::adapters {
 ConsoleReporter::ConsoleReporter(std::ostream& out, std::ostream& err)
     : out_{out}, err_{err} {}
 
-void ConsoleReporter::print_tokens(const std::vector<domain::Token>& tokens) {
-  for (const auto& t : tokens) {
-    out_ << std::setw(4) << t.location.line
-         << ':'
-         << std::left << std::setw(4) << t.location.column
-         << std::resetiosflags(std::ios::adjustfield)
-         << "  "
-         << std::left << std::setw(20) << domain::token_kind_name(t.kind)
-         << std::resetiosflags(std::ios::adjustfield)
-         << "  \"" << t.lexeme << "\"\n";
-  }
-}
-
-void ConsoleReporter::print_errors(const std::vector<domain::LexicalError>& errors) {
+void ConsoleReporter::print_lexical_errors(
+    const std::vector<domain::LexicalError>& errors) {
   for (const auto& e : errors) {
     err_ << std::setw(4) << e.location.line
          << ':'
@@ -36,11 +24,22 @@ void ConsoleReporter::print_errors(const std::vector<domain::LexicalError>& erro
   }
 }
 
-void ConsoleReporter::print_symbols(const std::vector<std::string>& symbols) {
-  out_ << "\nSymbol table (" << symbols.size() << " entries):\n";
-  for (std::size_t i = 0; i < symbols.size(); ++i) {
-    out_ << std::setw(4) << i << "  \"" << symbols[i] << "\"\n";
+void ConsoleReporter::print_syntax_error(const domain::SyntaxError& error) {
+  const auto& token = error.unexpected;
+
+  err_ << token.location.line << ':' << token.location.column
+       << "  syntax error: expected " << error.expected << ", found ";
+
+  if (token.kind == domain::TokenKind::end_of_file) {
+    err_ << "end of file";
+  } else {
+    err_ << '"' << token.lexeme << '"';
   }
+  err_ << '\n';
+}
+
+void ConsoleReporter::print_success() {
+  out_ << "Syntax analysis completed successfully.\n";
 }
 
 }  // namespace darthex::adapters

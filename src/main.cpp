@@ -5,6 +5,7 @@
 
 #include "darthex/adapters/ConsoleReporter.hpp"
 #include "darthex/adapters/Lexer.hpp"
+#include "darthex/adapters/Parser.hpp"
 #include "darthex/adapters/SymbolTable.hpp"
 #include "darthex/application/services/LexService.hpp"
 
@@ -29,9 +30,18 @@ int main(int argc, char* argv[]) {
   service.run();
 
   darthex::adapters::ConsoleReporter reporter{std::cout, std::cerr};
-  reporter.print_tokens(service.tokens());
-  reporter.print_symbols(symbols.symbols());
-  reporter.print_errors(service.errors());
+  if (service.has_errors()) {
+    reporter.print_lexical_errors(service.errors());
+    return 1;
+  }
 
-  return service.has_errors() ? 1 : 0;
+  darthex::adapters::Parser parser;
+  const auto syntax_error = parser.parse(service.tokens());
+  if (syntax_error) {
+    reporter.print_syntax_error(*syntax_error);
+    return 1;
+  }
+
+  reporter.print_success();
+  return 0;
 }

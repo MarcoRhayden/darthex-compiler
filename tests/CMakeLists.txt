@@ -17,6 +17,7 @@ add_executable(darthex_tests
   unit/domain/char_class_test.cpp
   unit/adapters/lexer_test.cpp
   unit/adapters/parser_test.cpp
+  unit/adapters/console_reporter_test.cpp
   unit/adapters/symbol_table_test.cpp
   unit/application/ports/parser_port_test.cpp
   unit/application/services/lex_service_test.cpp
