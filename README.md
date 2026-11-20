@@ -23,6 +23,11 @@ DarthEx is a handwritten compiler built in C++17 following Clean Architecture pr
 | `application` | Use cases that drive the compilation pipeline.                         |
 | `adapters`    | CLI and console output. The only layer that touches the outside world. |
 
+## Syntax Grammar
+
+The grammar used by the parser and its adjustments are documented in
+[docs/syntax-grammar.md](docs/syntax-grammar.md).
+
 ## Requirements
 
 - CMake ≥ 3.20
@@ -50,8 +55,9 @@ cmake --build build && ctest --test-dir build --output-on-failure
 
 | Suite | Layer |
 |-------|-------|
-| `source_location`, `token`, `token_kind`, `lexical_error`, `identifier`, `keyword`, `char_class` | `domain` |
+| `source_location`, `token`, `token_kind`, `lexical_error`, `syntax_error`, `identifier`, `keyword`, `char_class` | `domain` |
 | `lexer`, `symbol_table` | `adapters` |
+| `parser_port` | `application/ports` |
 | `lex_service` | `application/services` |
 
 ### Acceptance tests (`tests/acceptance/`)
