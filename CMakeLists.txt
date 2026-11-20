@@ -28,6 +28,7 @@ set_target_properties(darthex_application PROPERTIES CXX_EXTENSIONS OFF)
 
 add_library(darthex_adapters STATIC
   src/adapters/Lexer.cpp
+  src/adapters/Parser.cpp
   src/adapters/SymbolTable.cpp
   src/adapters/ConsoleReporter.cpp
 )

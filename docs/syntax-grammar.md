@@ -7,7 +7,7 @@ decl        ::= ident-list ":" type
 ident-list  ::= identifier { "," identifier }
 type        ::= "int" | "float" | "char"
 
-stmt-list   ::= stmt { ";" stmt }
+stmt-list   ::= stmt { ";" stmt } [ ";" ]
 stmt        ::= assign | if | while | repeat | read | write
 assign      ::= identifier "=" simple-expr
 if          ::= "if" condition "then" stmt-list [ "else" stmt-list ] "end"
@@ -34,6 +34,7 @@ constant    ::= integer_const | float_const | char_const
 
 - As declarações ficam antes de `begin`, como nos programas de teste.
 - Declarações usam `:` para separar os nomes do tipo.
+- A lista de comandos aceita `;` antes de `end`, `else` ou `until`.
 - `simple-expr` e `term` usam repetição para evitar recursão à esquerda.
 - O nome `factor-a` é usado em todas as regras.
 - As regras de `while` e `repeat` foram escritas sem regras auxiliares.
