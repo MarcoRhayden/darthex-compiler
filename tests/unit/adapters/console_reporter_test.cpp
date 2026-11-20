@@ -37,6 +37,19 @@ TEST_CASE("reporter describes end of file in a syntax error") {
         "8:1  syntax error: expected 'end', found end of file\n");
 }
 
+TEST_CASE("reporter does not duplicate quotes around a string literal") {
+  std::ostringstream out;
+  std::ostringstream err;
+  ConsoleReporter reporter{out, err};
+  const SyntaxError error{
+      {TokenKind::string_literal, "\"Area: \"", {5, 7, 42}}, "'('"};
+
+  reporter.print_syntax_error(error);
+
+  CHECK(err.str() ==
+        "5:7  syntax error: expected '(', found \"Area: \"\n");
+}
+
 TEST_CASE("reporter prints syntax analysis success") {
   std::ostringstream out;
   std::ostringstream err;

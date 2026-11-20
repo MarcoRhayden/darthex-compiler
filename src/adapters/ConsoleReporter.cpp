@@ -32,6 +32,9 @@ void ConsoleReporter::print_syntax_error(const domain::SyntaxError& error) {
 
   if (token.kind == domain::TokenKind::end_of_file) {
     err_ << "end of file";
+  } else if (token.kind == domain::TokenKind::string_literal ||
+             token.kind == domain::TokenKind::char_const) {
+    err_ << token.lexeme;
   } else {
     err_ << '"' << token.lexeme << '"';
   }
