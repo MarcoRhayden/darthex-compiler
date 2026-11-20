@@ -30,6 +30,7 @@ int main(int argc, char* argv[]) {
 
   darthex::adapters::ConsoleReporter reporter{std::cout, std::cerr};
   reporter.print_tokens(service.tokens());
+  reporter.print_symbols(symbols.symbols());
   reporter.print_errors(service.errors());
 
   return service.has_errors() ? 1 : 0;

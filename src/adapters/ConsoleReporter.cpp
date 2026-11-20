@@ -36,4 +36,11 @@ void ConsoleReporter::print_errors(const std::vector<domain::LexicalError>& erro
   }
 }
 
+void ConsoleReporter::print_symbols(const std::vector<std::string>& symbols) {
+  out_ << "\nSymbol table (" << symbols.size() << " entries):\n";
+  for (std::size_t i = 0; i < symbols.size(); ++i) {
+    out_ << std::setw(4) << i << "  \"" << symbols[i] << "\"\n";
+  }
+}
+
 }  // namespace darthex::adapters

@@ -43,16 +43,29 @@ TEST_CASE("repeated identifier installs only once") {
   REQUIRE(symbols.find("count").has_value());
 }
 
-TEST_CASE("keywords are not installed in the symbol table") {
+TEST_CASE("keywords are installed in the symbol table") {
   Lexer lexer{"if then else"};
   SymbolTable symbols;
   LexService service{lexer, symbols};
   service.run();
 
-  CHECK(symbols.size() == 0);
-  CHECK_FALSE(symbols.find("if").has_value());
-  CHECK_FALSE(symbols.find("then").has_value());
-  CHECK_FALSE(symbols.find("else").has_value());
+  CHECK(symbols.size() == 3);
+  REQUIRE(symbols.find("if").has_value());
+  REQUIRE(symbols.find("then").has_value());
+  REQUIRE(symbols.find("else").has_value());
+}
+
+TEST_CASE("identifiers and keywords are both installed") {
+  Lexer lexer{"x read y write"};
+  SymbolTable symbols;
+  LexService service{lexer, symbols};
+  service.run();
+
+  CHECK(symbols.size() == 4);
+  REQUIRE(symbols.find("x").has_value());
+  REQUIRE(symbols.find("y").has_value());
+  REQUIRE(symbols.find("read").has_value());
+  REQUIRE(symbols.find("write").has_value());
 }
 
 TEST_CASE("tokens are collected in order") {

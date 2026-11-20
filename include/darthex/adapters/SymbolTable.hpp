@@ -18,6 +18,7 @@ class SymbolTable : public application::ports::ISymbolTable {
   std::optional<application::ports::SymbolId> find(std::string_view lexeme) const override;
 
   std::size_t size() const;
+  const std::vector<std::string>& symbols() const;
 
  private:
   std::unordered_map<std::string, application::ports::SymbolId> index_;

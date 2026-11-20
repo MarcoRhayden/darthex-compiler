@@ -20,7 +20,7 @@ void LexService::run() {
 
     auto token = std::get<domain::Token>(result);
 
-    if (token.kind == domain::TokenKind::identifier) {
+    if (token.kind == domain::TokenKind::identifier || domain::is_keyword(token.kind)) {
       symbols_.install(token.lexeme);
     }
 

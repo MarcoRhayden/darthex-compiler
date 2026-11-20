@@ -25,4 +25,8 @@ std::size_t SymbolTable::size() const {
   return symbols_.size();
 }
 
+const std::vector<std::string>& SymbolTable::symbols() const {
+  return symbols_;
+}
+
 }  // namespace darthex::adapters
