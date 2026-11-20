@@ -26,13 +26,20 @@ class Parser : public application::ports::IParser {
   bool parse_assignment();
   bool parse_read();
   bool parse_write();
-  bool parse_operand();
+  bool parse_expression();
+  bool parse_simple_expression();
+  bool parse_term();
+  bool parse_factor_a();
+  bool parse_factor();
 
   bool expect(domain::TokenKind kind, std::string_view expected);
   bool fail(std::string_view expected);
   bool check(domain::TokenKind kind) const;
   bool match(domain::TokenKind kind);
   bool is_statement_start() const;
+  bool is_relational_operator() const;
+  bool is_additive_operator() const;
+  bool is_multiplicative_operator() const;
   const domain::Token& current() const;
   void advance();
 

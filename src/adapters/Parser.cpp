@@ -105,7 +105,7 @@ bool Parser::parse_statement() {
 
 bool Parser::parse_assignment() {
   return expect(TokenKind::identifier, "identifier") &&
-         expect(TokenKind::op_assign, "'='") && parse_operand();
+         expect(TokenKind::op_assign, "'='") && parse_simple_expression();
 }
 
 bool Parser::parse_read() {
@@ -121,19 +121,71 @@ bool Parser::parse_write() {
     return false;
   }
 
-  if (!match(TokenKind::string_literal) && !parse_operand()) {
+  if (!match(TokenKind::string_literal) && !parse_simple_expression()) {
     return false;
   }
 
   return expect(TokenKind::right_paren, "')'");
 }
 
-bool Parser::parse_operand() {
+bool Parser::parse_expression() {
+  if (!parse_simple_expression()) {
+    return false;
+  }
+
+  if (is_relational_operator()) {
+    advance();
+    return parse_simple_expression();
+  }
+  return true;
+}
+
+bool Parser::parse_simple_expression() {
+  if (!parse_term()) {
+    return false;
+  }
+
+  while (is_additive_operator()) {
+    advance();
+    if (!parse_term()) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool Parser::parse_term() {
+  if (!parse_factor_a()) {
+    return false;
+  }
+
+  while (is_multiplicative_operator()) {
+    advance();
+    if (!parse_factor_a()) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool Parser::parse_factor_a() {
+  if (check(TokenKind::op_not) || check(TokenKind::op_minus)) {
+    advance();
+  }
+  return parse_factor();
+}
+
+bool Parser::parse_factor() {
   if (match(TokenKind::identifier) || match(TokenKind::integer_const) ||
       match(TokenKind::float_const) || match(TokenKind::char_const)) {
     return true;
   }
-  return fail("identifier or constant");
+
+  if (match(TokenKind::left_paren)) {
+    return parse_expression() && expect(TokenKind::right_paren, "')'");
+  }
+
+  return fail("expression value");
 }
 
 bool Parser::expect(TokenKind kind, std::string_view expected) {
@@ -166,6 +218,22 @@ bool Parser::match(TokenKind kind) {
 bool Parser::is_statement_start() const {
   return check(TokenKind::identifier) || check(TokenKind::kw_read) ||
          check(TokenKind::kw_write);
+}
+
+bool Parser::is_relational_operator() const {
+  return check(TokenKind::op_equal) || check(TokenKind::op_not_equal) ||
+         check(TokenKind::op_less) || check(TokenKind::op_less_equal) ||
+         check(TokenKind::op_greater) || check(TokenKind::op_greater_equal);
+}
+
+bool Parser::is_additive_operator() const {
+  return check(TokenKind::op_plus) || check(TokenKind::op_minus) ||
+         check(TokenKind::op_or);
+}
+
+bool Parser::is_multiplicative_operator() const {
+  return check(TokenKind::op_multiply) || check(TokenKind::op_divide) ||
+         check(TokenKind::op_modulo) || check(TokenKind::op_and);
 }
 
 const domain::Token& Parser::current() const {

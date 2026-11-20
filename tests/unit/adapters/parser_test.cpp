@@ -56,6 +56,29 @@ TEST_CASE("parser accepts declarations and a trailing semicolon") {
                     "begin x = y; write(letter); end."));
 }
 
+TEST_CASE("parser accepts expressions with every arithmetic operator") {
+  Parser parser;
+
+  CHECK_FALSE(parse(parser,
+                    "program expressions begin "
+                    "result = 1 + 2 - 3 * 4 / 5 % 2; "
+                    "logic = !ready && other || ready; "
+                    "negative = -(result + 1); "
+                    "write(result + 2 * 3) "
+                    "end."));
+}
+
+TEST_CASE("parser accepts relational operators inside grouped expressions") {
+  Parser parser;
+
+  CHECK_FALSE(parse(parser,
+                    "program comparisons begin "
+                    "a = (x == y); b = (x != y); "
+                    "c = (x < y); d = (x <= y); "
+                    "e = (x > y); f = (x >= y) "
+                    "end."));
+}
+
 TEST_CASE("parser reports the first expected item") {
   Parser parser;
 
@@ -121,6 +144,31 @@ TEST_CASE("parser validates read and write parentheses") {
     REQUIRE(error);
     CHECK(error->unexpected.kind == TokenKind::kw_end);
     CHECK(error->expected == "')'");
+  }
+}
+
+TEST_CASE("parser reports incomplete expressions") {
+  Parser parser;
+
+  SECTION("missing value after an operator") {
+    const auto error = parse(parser, "program demo begin x = 1 + end.");
+    REQUIRE(error);
+    CHECK(error->unexpected.kind == TokenKind::kw_end);
+    CHECK(error->expected == "expression value");
+  }
+
+  SECTION("missing closing parenthesis") {
+    const auto error = parse(parser, "program demo begin x = (1 + 2 end.");
+    REQUIRE(error);
+    CHECK(error->unexpected.kind == TokenKind::kw_end);
+    CHECK(error->expected == "')'");
+  }
+
+  SECTION("missing value after a unary operator") {
+    const auto error = parse(parser, "program demo begin x = - end.");
+    REQUIRE(error);
+    CHECK(error->unexpected.kind == TokenKind::kw_end);
+    CHECK(error->expected == "expression value");
   }
 }
 
