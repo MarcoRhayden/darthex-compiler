@@ -112,6 +112,8 @@ TEST_CASE("report fixtures reproduce every documented syntax result") {
       {"test3/02.dex", TokenKind::kw_begin, "';'", 4, 1},
       {"test3/03.dex", TokenKind::kw_write, "'then'", 15, 15},
       {"test3/04.dex", TokenKind::end_of_file, "'end'", 19, 1},
+      {"test3/05.dex", TokenKind::end_of_file, "'end'", 20, 1},
+      {"test3/06.dex", TokenKind::end_of_file, "'.'", 21, 1},
       {"test4/01.dex", TokenKind::kw_do, "')'", 12, 56},
       {"test4/02.dex", TokenKind::kw_write, "';'", 18, 1},
       {"test4/03.dex", TokenKind::end_of_file, "'.'", 24, 1},
@@ -135,7 +137,7 @@ TEST_CASE("report fixtures reproduce every documented syntax result") {
   }
 
   const char* successful[] = {
-      "test1/03.dex", "test2/04.dex", "test3/05.dex",
+      "test1/03.dex", "test2/04.dex", "test3/07.dex",
       "test4/04.dex", "test5/03.dex",
   };
 

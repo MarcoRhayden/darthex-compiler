@@ -17,4 +17,3 @@ write("Par")
 else
 write("Impar")
 end
-end.
