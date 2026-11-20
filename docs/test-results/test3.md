@@ -117,7 +117,72 @@ Saída:
 19:1  syntax error: expected 'end', found end of file
 ```
 
-Correção: fechar o segundo `if` e o programa com `end` e `end.`.
+Correção: adicionar `end` para fechar o segundo `if`.
+
+## Quinta análise
+
+```text
+program teste3
+a, aux : int;
+b : float;
+begin
+b = 0;
+read(a);
+read(b);
+if a > b then
+aux = b;
+b = a;
+a = aux
+end;
+write(a);
+write(b);
+if a % 2 == 0 then
+write("Par")
+else
+write("Impar")
+end
+```
+
+Saída:
+
+```text
+20:1  syntax error: expected 'end', found end of file
+```
+
+Correção: adicionar `end` para fechar o programa.
+
+## Sexta análise
+
+```text
+program teste3
+a, aux : int;
+b : float;
+begin
+b = 0;
+read(a);
+read(b);
+if a > b then
+aux = b;
+b = a;
+a = aux
+end;
+write(a);
+write(b);
+if a % 2 == 0 then
+write("Par")
+else
+write("Impar")
+end
+end
+```
+
+Saída:
+
+```text
+21:1  syntax error: expected '.', found end of file
+```
+
+Correção: adicionar `.` depois do último `end`.
 
 ## Resultado final
 
