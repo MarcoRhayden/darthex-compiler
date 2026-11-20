@@ -22,6 +22,7 @@ add_executable(darthex_tests
   unit/application/ports/parser_port_test.cpp
   unit/application/services/lex_service_test.cpp
   acceptance/stage_one_test.cpp
+  acceptance/stage_two_test.cpp
 )
 target_compile_definitions(darthex_tests PRIVATE
   FIXTURE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/fixtures"
@@ -33,3 +34,21 @@ darthex_enable_warnings(darthex_tests)
 list(APPEND CMAKE_MODULE_PATH "${catch2_SOURCE_DIR}/extras")
 include(Catch)
 catch_discover_tests(darthex_tests)
+
+foreach(fixture IN ITEMS test1 test2 test3 test4 test5 extra1 extra2)
+  add_test(
+    NAME parser_cli_valid_${fixture}
+    COMMAND darthexc "${CMAKE_CURRENT_SOURCE_DIR}/fixtures/parser/valid/${fixture}.dex"
+  )
+  set_tests_properties(parser_cli_valid_${fixture} PROPERTIES
+    PASS_REGULAR_EXPRESSION "Syntax analysis completed successfully."
+  )
+endforeach()
+
+foreach(fixture IN ITEMS test1 test2 test3 test4 test5)
+  add_test(
+    NAME parser_cli_invalid_${fixture}
+    COMMAND darthexc "${CMAKE_CURRENT_SOURCE_DIR}/fixtures/parser/invalid/${fixture}.dex"
+  )
+  set_tests_properties(parser_cli_invalid_${fixture} PROPERTIES WILL_FAIL TRUE)
+endforeach()

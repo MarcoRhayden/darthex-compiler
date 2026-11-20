@@ -1,0 +1,7 @@
+program teste4
+pontuacao, pontuacaoMaxima : int;
+begin
+while ((pontuacao > 0) && (pontuacao <= pontuacaoMaxima) do
+write(pontuacao)
+end
+end.

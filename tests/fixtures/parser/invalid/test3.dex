@@ -1,0 +1,9 @@
+program teste3
+a : int;
+begin
+read(a);
+if a % 2 == 0 then
+write("Par")
+else
+write("Impar");
+end.

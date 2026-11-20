@@ -1,0 +1,9 @@
+program teste5
+a, b, c, maior : int;
+begin
+if (a > b) && (a > c)
+maior = a
+else
+maior = c
+end
+end.

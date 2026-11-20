@@ -1,0 +1,16 @@
+program teste1
+base, altura : float;
+perimetro : float;
+area : float;
+begin
+write("Entre com a altura do retangulo:");
+read(altura);
+write("Entre com a base do retangulo:");
+read(base);
+area = base * altura;
+perimetro = 2 * base + 2 * altura;
+write("Area: ");
+write(area);
+write("Perimetro: ");
+write(perimetro)
+end.

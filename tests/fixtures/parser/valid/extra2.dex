@@ -1,0 +1,16 @@
+program classificacao
+nota : float;
+aprovado : int;
+begin
+read(nota);
+if nota >= 60.0 then
+aprovado = 1;
+write("Aprovado")
+else
+aprovado = 0;
+write("Reprovado")
+end;
+repeat
+nota = nota + 1.0
+until nota >= 100.0
+end.

@@ -1,0 +1,7 @@
+program teste1
+area : float;
+begin
+area = 10.0;
+write "Area: ";
+write(area)
+end.

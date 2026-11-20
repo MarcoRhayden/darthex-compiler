@@ -1,0 +1,6 @@
+program teste2
+val : float;
+begin
+val := 34;
+write(val)
+end.

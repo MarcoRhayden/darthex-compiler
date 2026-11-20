@@ -1,0 +1,11 @@
+program contador
+valor, limite : int;
+begin
+read(limite);
+valor = 0;
+while valor < limite do
+write(valor);
+valor = valor + 1
+end;
+write("Fim")
+end.

@@ -1,0 +1,26 @@
+program teste5
+a, b, c, maior : int;
+opc : char;
+begin
+repeat
+write("A: ");
+read(a);
+write("B: ");
+read(b);
+write("C: ");
+read(c);
+if (a > b) && (a > c) then
+maior = a
+else
+if b > c then
+maior = b
+else
+maior = c
+end
+end;
+write("Maior valor: ");
+write(maior);
+write("Continuar? (S/N) ");
+read(opc)
+until (opc == 'N') || (opc == 'n')
+end.
